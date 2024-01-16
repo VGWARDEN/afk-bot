@@ -1,5 +1,6 @@
 const keep_alive = require('./keep_alive.js')
 const mineflayer = require('mineflayer');
+const express = require('express');
 const Movements = require('mineflayer-pathfinder').Movements;
 const pathfinder = require('mineflayer-pathfinder').pathfinder;
 const { GoalBlock, GoalXZ } = require('mineflayer-pathfinder').goals;
@@ -8,6 +9,15 @@ const config = require('./settings.json');
 
 const loggers = require('./logging.js');
 const logger = loggers.logger;
+const app = express();
+
+
+app.get('/', (req, res) => {
+  const currentUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
+  res.send('Your Bot Is Ready! Subscribe My Youtube: <a href="https://youtube.com/@H2N_OFFICIAL?si=UOLwjqUv-C1mWkn4">H2N OFFICIAL</a><br>Link Web For Uptime: <a href="' + currentUrl + '">' + currentUrl + '</a>');
+}); 
+
+app.listen(3000);
 
 function createBot() {
    const bot = mineflayer.createBot({
@@ -23,10 +33,6 @@ function createBot() {
    const mcData = require('minecraft-data')(bot.version);
    const defaultMove = new Movements(bot, mcData);
    bot.settings.colorsEnabled = false;
-     else {
-      logger.error("Bot settings are undefined!");
-   if (bot.settings) {
-
    bot.pathfinder.setMovements(defaultMove);
 
    bot.once('spawn', () => {

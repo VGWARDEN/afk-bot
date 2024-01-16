@@ -23,6 +23,10 @@ function createBot() {
    const mcData = require('minecraft-data')(bot.version);
    const defaultMove = new Movements(bot, mcData);
    bot.settings.colorsEnabled = false;
+   } else {
+      logger.error("Bot settings are undefined!");
+   if (bot.settings) {
+
    bot.pathfinder.setMovements(defaultMove);
 
    bot.once('spawn', () => {

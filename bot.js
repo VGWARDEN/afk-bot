@@ -1,4 +1,3 @@
-const keep_alive = require('./keep_alive.js')
 const mineflayer = require('mineflayer');
 const express = require('express');
 const Movements = require('mineflayer-pathfinder').Movements;
@@ -10,14 +9,24 @@ const config = require('./settings.json');
 const loggers = require('./logging.js');
 const logger = loggers.logger;
 const app = express();
+const http = require('http');
 
+const server = http.createServer((req, res) => {
+  res.setHeader('Content-Type', 'text/html');
+  res.end(`
+    <html>
+      <head>
+        <title>Your Web View</title>
+      </head>
+      <body style="margin: 0; padding: 0;">
+        <iframe width="100%" height="100%" src="https://axocoder.vercel.app/" frameborder="0" allowfullscreen></iframe>
+      </body>
+    </html>`);
+});
 
-app.get('/', (req, res) => {
-  const currentUrl = `${req.protocol}://${req.get('host')}${req.originalUrl}`;
-  res.send('Your Bot Is Ready! Subscribe My Youtube: <a href="https://youtube.com/@H2N_OFFICIAL?si=UOLwjqUv-C1mWkn4">H2N OFFICIAL</a><br>Link Web For Uptime: <a href="' + currentUrl + '">' + currentUrl + '</a>');
-}); 
-
-app.listen(3000);
+server.listen(3000, () => {
+  console.log('Server Online because of Axo Coder ✅!!');
+});
 
 function createBot() {
    const bot = mineflayer.createBot({
